@@ -1,0 +1,14 @@
+services:
+   data-service:
+     build: ./data-service
+     container_name: data-service
+     ports:
+       - "3001:3001"
+
+   gateway-service:
+     build: ./gateway-service
+     container_name: gateway-service
+     ports:
+       - "3000:3000"
+     depends_on:
+       - data-service
