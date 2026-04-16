@@ -1,14 +1,26 @@
 services:
-   data-service:
-     build: ./data-service
-     container_name: data-service
-     ports:
-       - "3001:3001"
+  data-service:
+    build: ./data-service
+    ports:
+      - "3001:3001"
 
-   gateway-service:
-     build: ./gateway-service
-     container_name: gateway-service
-     ports:
-       - "3000:3000"
-     depends_on:
-       - data-service
+  gateway-service:
+    build: ./gateway-service
+    ports:
+      - "3000:3000"
+    depends_on:
+      - data-service
+
+  prometheus:
+    image: prom/prometheus
+    container_name: prometheus
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+    ports:
+      - "9090:9090"
+
+  grafana:
+    image: grafana/grafana
+    container_name: grafana
+    ports:
+      - "3002:3000"
